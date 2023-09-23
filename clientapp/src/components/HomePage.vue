@@ -5,7 +5,7 @@
 
       <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
 
-      <h1 class="text-h2 font-weight-bold">Workout Tracker (temp title :) )</h1>
+      <h1 class="text-h2 font-weight-bold">Workout Tracker</h1>
 
       <div class="text-body-2 font-weight-light mb-n1">Built with Vuetify 3</div>
 

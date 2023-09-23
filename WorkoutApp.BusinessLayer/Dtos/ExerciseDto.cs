@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoutApp.Entity.Entities
+namespace WorkoutApp.BusinessLayer.Dtos
 {
-    public class Category : BaseEntity
+    public class ExerciseDto : BaseDto
     {
         public string Name { get; set; }
+        public int CategoryId { get; set; }
+
+        public CategoryDto? Category { get; set; }
     }
 }

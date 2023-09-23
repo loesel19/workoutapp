@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorkoutApp.BusinessLayer.Services;
 
 namespace WorkoutApp.Api.Controllers
 {
     public class SetController : WorkoutAppController
     {
-        public SetController(IServiceProvider service): base(service) { }
+        public SetController(IService service): base(service) { }
 
         [HttpGet]
         [Route("[controller]/{userId}")]

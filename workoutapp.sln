@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workoutapp.Domain", "Workoutapp.Entity\Workoutapp.Domain.csproj", "{CCF12E00-40F2-4AFC-BCF6-41349F7BDBD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutApp.Api", "WorkoutApp.Api\WorkoutApp.Api.csproj", "{56B22213-BD6F-43E1-BF91-265B6BA2B88A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutApp.Api", "WorkoutApp.Api\WorkoutApp.Api.csproj", "{56B22213-BD6F-43E1-BF91-265B6BA2B88A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutApp.BusinessLayer", "WorkoutApp.BusinessLayer\WorkoutApp.BusinessLayer.csproj", "{499B38A8-F3C9-403F-A0EE-B29AB0A87A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutApp.Entity", "WorkoutApp.Entity\WorkoutApp.Entity.csproj", "{C1282C84-556E-49ED-97AC-5AD88AF9C1D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CCF12E00-40F2-4AFC-BCF6-41349F7BDBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCF12E00-40F2-4AFC-BCF6-41349F7BDBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCF12E00-40F2-4AFC-BCF6-41349F7BDBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCF12E00-40F2-4AFC-BCF6-41349F7BDBD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56B22213-BD6F-43E1-BF91-265B6BA2B88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56B22213-BD6F-43E1-BF91-265B6BA2B88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56B22213-BD6F-43E1-BF91-265B6BA2B88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56B22213-BD6F-43E1-BF91-265B6BA2B88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499B38A8-F3C9-403F-A0EE-B29AB0A87A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499B38A8-F3C9-403F-A0EE-B29AB0A87A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499B38A8-F3C9-403F-A0EE-B29AB0A87A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499B38A8-F3C9-403F-A0EE-B29AB0A87A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1282C84-556E-49ED-97AC-5AD88AF9C1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1282C84-556E-49ED-97AC-5AD88AF9C1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1282C84-556E-49ED-97AC-5AD88AF9C1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1282C84-556E-49ED-97AC-5AD88AF9C1D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

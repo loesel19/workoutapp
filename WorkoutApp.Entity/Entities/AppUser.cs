@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace WorkoutApp.Entity.Entities
 {
-    public class Category : BaseEntity
+    public class AppUser : BaseEntity
     {
-        public string Name { get; set; }
+        public string? Email { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

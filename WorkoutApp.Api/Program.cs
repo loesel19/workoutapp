@@ -1,6 +1,8 @@
-using Workoutapp.Entity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WorkoutApp.BusinessLayer.Services;
+using WorkoutApp.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,11 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
-builder.Services.AddDbContext<WorkoutDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnectionString")));
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseSqlite(@"Data Source=C:\temp\WorkoutApp.db", b => b.MigrationsAssembly("WorkoutApp.Api"));
+});
+builder.Services.AddTransient<IService, Service>();
 
 var app = builder.Build();
 

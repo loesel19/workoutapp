@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using WorkoutApp.BusinessLayer.Services;
 
 namespace WorkoutApp.Api.Controllers
 {
     public class WorkoutAppController : Controller
     {
-        IServiceProvider serviceProvider;
+        public static IService _service;
 
         
-        public WorkoutAppController(IServiceProvider service)
+        public WorkoutAppController(IService service)
         {
-            serviceProvider = service;
+            _service = service;
         }
     }
 }

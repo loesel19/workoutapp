@@ -44,6 +44,7 @@
                   </v-card>
                   <v-card-actions class="justify-end">
                     <v-btn variant="text" @click="isActive.value = false">Close</v-btn>
+                    <v-btn variant="text" @click="isActive.value = false">Add</v-btn>
                   </v-card-actions>
                 </v-card>
               </template>
