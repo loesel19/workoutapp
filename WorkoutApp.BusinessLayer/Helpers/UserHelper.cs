@@ -12,8 +12,8 @@ namespace WorkoutApp.BusinessLayer.Helpers
     {
         public int GetId()
         {
-            var claimsUser = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
-            if (int.TryParse(claimsUser.Actor.Claims.Where(x => x.Type == "userid").FirstOrDefault().Value, out int id))
+            var claimsUser = Thread.CurrentPrincipal?.Identity as ClaimsIdentity;
+            if (claimsUser != null && int.TryParse(claimsUser.Actor.Claims.Where(x => x.Type == "userid").FirstOrDefault().Value, out int id))
             {
                 return id;
             }

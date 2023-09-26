@@ -1,5 +1,5 @@
 <template>
-  <v-container class="" style="margin-top:10px">
+  <v-container style="margin-top:10px">
     <v-row justify="center">
       <v-col-auto>
         <h3 class="text-h2 ">Track your progress with this data table</h3>
@@ -20,10 +20,14 @@
                     <v-container>
                       <v-row>
                         <v-col>
-                          <v-select label="Category" :items="['Push', 'Pull', 'Legs']"></v-select>
+                          <v-select label="Category" :items="categories" item-title="name" item-value="id"></v-select>
                         </v-col>
                         <v-col>
-                          <v-text-field label="Exercise Name"></v-text-field>
+                          <div style="display: flex; justify-content:flex-start;">
+                            <v-text-field label="Exercise Name"></v-text-field>
+                            <v-btn height="55px">+</v-btn>
+                          </div>
+
                         </v-col>
                       </v-row>
                       <v-row>
@@ -36,7 +40,8 @@
                       </v-row>
                       <v-row>
                         <v-col>
-                          <v-date-picker title="" header="Enter Date" input-mode="keyboard" hide-actions="true"></v-date-picker>
+                          <v-date-picker title="" header="Enter Date" input-mode="keyboard" hide-actions="true"
+                            v-model="set.date"></v-date-picker>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -71,25 +76,27 @@
 
 <script setup>
 //
+import HttpClient from '@/modules/HttpClient';
+import Toast from '@/modules/Toast';
 import { VDataTable } from 'vuetify/labs/VDataTable';
-import { VDatePicker} from "vuetify/labs/VDatePicker"
-import axios from "axios";
+import { VDatePicker } from "vuetify/labs/VDatePicker"
 </script>
 
 <script>
 export default {
-  mounted(){
-     axios({
-      method: 'get',
-      url: 'https://localhost:7248/set/1',
-      
-     })
-     .then(function(response){
-      console.log(response)
-     })
+  mounted() {
+    HttpClient.Get("Category", (response) => {
+      if (!response.isSuccess) {
+        Toast.Error(response.message)
+        return;
+      }
+      this.categories = response.data
+    });
   },
   data() {
     return {
+      categories: [],
+      set: { date: new Date() },
       itemsPerPage: 5,
       headers: [
         {

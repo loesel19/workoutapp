@@ -34,6 +34,7 @@ namespace WorkoutApp.Api.Controllers
                 Thread.CurrentPrincipal = principal;
                 HttpContext.User = (ClaimsPrincipal)Thread.CurrentPrincipal;
             }
+            var x = _service.GetId();
             return Json(response);
         }
 

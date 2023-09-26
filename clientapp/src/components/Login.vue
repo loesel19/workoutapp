@@ -37,6 +37,7 @@
 import HttpClient from "@/modules/HttpClient";
 import Toast from "@/modules/Toast"
 import state from "@/modules/state";
+import router from "@/router";
 
 export default {
   mounted(){
@@ -56,8 +57,9 @@ export default {
         if(response.isSuccess){
           console.log("user", response.data)
           Toast.Success(response.message)
-          state.User = { username: this.User.Username, id: response.data.id }
+          state.User = { username: this.User.Username, id: response.data.id, email: response.data.email }
           console.log(state.User)
+          router.push('/')
         }else{
           Toast.Error(response.message);
         }

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkoutApp.BusinessLayer.Dtos;
+using WorkoutApp.BusinessLayer.Responses;
 using WorkoutApp.Entity.Entities;
 
 namespace WorkoutApp.BusinessLayer.Services
 {
     public partial interface IService
     {
-        List<Category> GetAllCategories();
+        BaseResponse<List<CategoryDto>> GetAllCategories();
     }
 }

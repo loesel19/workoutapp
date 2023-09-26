@@ -26,7 +26,7 @@ namespace WorkoutApp.BusinessLayer.Services
             
             if(user == null)
             {
-                return new BaseResponse<AppUserDto>().Success(null, 200, $"no user with id {id} can be found.");
+                return new BaseResponse<AppUserDto>().Error(null, 200, $"no user with id {id} can be found.");
             }
             return new BaseResponse<AppUserDto>().Success(user.ToDomain(), 200, $"Successfully retrieved user {user.Username}.");
         }

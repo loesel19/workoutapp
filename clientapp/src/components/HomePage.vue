@@ -15,7 +15,8 @@
         <v-col cols="auto">
           <v-tooltip text="Track your exercises" location="start">
             <template v-slot:activator="{ props }">
-              <v-btn v-bind="props" min-width="164" rel="noopener noreferrer" target="_blank" variant="text">
+              <v-btn v-bind="props" min-width="164" rel="noopener noreferrer" target="_blank" variant="text"
+                v-on:click="goWorkout">
                 <v-icon icon="mdi-view-dashboard" size="large" start />
 
                 Workout
@@ -42,6 +43,17 @@
 </template>
 
 <script setup>
-  //
+import router from '@/router';
 
+//
+
+</script>
+<script>
+export default {
+  methods:{
+    goWorkout(){
+      router.push('/workout')
+    }
+  }
+}
 </script>

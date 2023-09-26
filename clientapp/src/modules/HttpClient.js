@@ -1,18 +1,30 @@
 import config from "@/modules/config";
-import axios from "axios";
+import Toast from "./Toast";
 
 export default {
     async Get(url = "", after = () => { }) {
         console.log("in get")
         let fullUrl = config.api_endpoint + url
-        let response = await fetch(fullUrl, {
-            method: "GET",
+        let apiResponse = await fetch(fullUrl, {
+            method: "Get",
             cache: 'no-cache',
-        },
-        ).then(response => {
+            headers: new Headers({ 'content-type': 'application/json' }),
+        });
+        let response = await apiResponse.json();
+
+        if (response.status >= 500) {
+            Toast.Error("An error occurred on the server.")
+        }
+        else if (response.status >= 400) {
+
+        }
+        else if (response.status >= 300) {
+
+        } else {
             after(response)
-            return response.json();
-        })
+        }
+        return response
+
     },
     async Post(url = "", data = {}, after = () => { }) {
         console.log("in post")
@@ -26,7 +38,7 @@ export default {
         let response = await apiResponse.json();
 
         if (response.status >= 500) {
-
+            Toast.Error("An error occurred on the server.")
         }
         else if (response.status >= 400) {
 
