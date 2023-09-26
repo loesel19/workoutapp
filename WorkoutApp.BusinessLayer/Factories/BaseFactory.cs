@@ -10,24 +10,24 @@ namespace WorkoutApp.BusinessLayer.Factories
 {
     public static class BaseFactory
     {
-        public static BaseEntity ToEntity(this BaseDto dto)
+        public static T ToEntity<T>(this BaseDto dto) where T : BaseEntity, new()
         {
-            BaseEntity entity = new BaseEntity();
+            T entity = new T();
             if (dto != null)
             {
-                entity.UpdatedBy = dto.UpdatedBy;
-                entity.AddedBy = dto.AddedBy;
+                entity.UpdatedBy = dto.UpdatedBy ?? -1;
+                entity.AddedBy = dto.AddedBy ?? -1;
                 entity.DateAdded = dto.DateAdded;
                 entity.DateUpdated = dto.DateUpdated;
                 entity.Id = dto.Id;
-                entity.IsDeleted = dto.IsDeleted;
+                entity.IsDeleted = dto.IsDeleted ?? false;
             }
             return entity;
         }
 
-        public static BaseDto ToDomain(this IEntity entity)
+        public static T ToDomain<T>(this IEntity entity) where T : BaseDto, new()
         {
-            BaseDto dto = new BaseDto();
+            T dto = new T();
             if (entity != null)
             {
                 dto.UpdatedBy = entity.UpdatedBy;

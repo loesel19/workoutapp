@@ -7,7 +7,12 @@ namespace WorkoutApp.BusinessLayer.Factories
     {
         public static SetDto ToDomain(this Set entity)
         {
-            SetDto dto = (SetDto)BaseFactory.ToDomain(entity);
+            if(entity == null)
+            {
+                return null;
+            }
+
+            SetDto dto = BaseFactory.ToDomain<SetDto>(entity);
             dto.ExerciseId = entity.ExerciseId;
             dto.Weight = entity.Weight;
             dto.Repitions = entity.Repitions;
@@ -25,7 +30,12 @@ namespace WorkoutApp.BusinessLayer.Factories
 
         public static Set ToEntity(this SetDto dto)
         {
-            Set entity = (Set)BaseFactory.ToEntity(dto);
+            if(dto == null)
+            {
+                return null;
+            }
+
+            Set entity = BaseFactory.ToEntity<Set>(dto);
             entity.ExerciseId = dto.ExerciseId;
             entity.Weight = dto.Weight;
             entity.Repitions = dto.Repitions;

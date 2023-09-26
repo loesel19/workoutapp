@@ -12,8 +12,9 @@ namespace WorkoutApp.BusinessLayer.Services
     public partial interface IService
     {
         BaseResponse<AppUserDto> getUser(int id);
-        BaseResponse<AppUserDto> signIn(string username, string password);
+        BaseResponse<AppUserDto> signIn(AppUserDto user);
         BaseResponse<AppUserDto> createUser(AppUserDto user);
+        int GetId();
 
     }
 }

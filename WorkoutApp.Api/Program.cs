@@ -20,7 +20,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlite(@"Data Source=C:\temp\WorkoutApp.db", b => b.MigrationsAssembly("WorkoutApp.Api"));
-});
+}, ServiceLifetime.Transient);
 builder.Services.AddTransient<IService, Service>();
 
 var app = builder.Build();

@@ -12,14 +12,24 @@ namespace WorkoutApp.BusinessLayer.Factories
     {
         public static CategoryDto ToDomain(this Category entity)
         {
-            CategoryDto dto = (CategoryDto)BaseFactory.ToDomain(entity);
+            if(entity == null)
+            {
+                return null;
+            }
+
+            CategoryDto dto = BaseFactory.ToDomain<CategoryDto>(entity);
             dto.Name = entity.Name;
             return dto;
         }
         
         public static Category ToEntity(this CategoryDto dto)
         {
-            Category entity = (Category)BaseFactory.ToEntity(dto);
+            if(dto == null)
+            {
+                return null;
+            }
+
+            Category entity = BaseFactory.ToEntity<Category>(dto);
             entity.Name = dto.Name;
             return entity;
         }

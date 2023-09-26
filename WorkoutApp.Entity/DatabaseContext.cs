@@ -18,8 +18,43 @@ namespace WorkoutApp.Entity
         {
 
         }
-        
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { 
+               
+        }
+        public override int SaveChanges()
+        {
+            this.ChangeTracker.DetectChanges();
+            var added = this.ChangeTracker.Entries()
+                        .Where(t => t.State == EntityState.Added)
+                        .Select(t => t.Entity)
+                        .ToArray();
+
+            foreach (var entity in added)
+            {
+                if (entity is IEntity)
+                {
+                    var track = entity as IEntity;
+                    track.DateAdded = DateTime.Now;
+                    track.DateUpdated = DateTime.Now;
+                }
+            }
+
+            var modified = this.ChangeTracker.Entries()
+                        .Where(t => t.State == EntityState.Modified)
+                        .Select(t => t.Entity)
+                        .ToArray();
+
+            foreach (var entity in modified)
+            {
+                if (entity is IEntity)
+                {
+                    var track = entity as IEntity;
+                    track.DateUpdated = DateTime.Now;
+                }
+            }
+            return base.SaveChanges();
+        }
+
     }
 
     

@@ -12,7 +12,12 @@ namespace WorkoutApp.BusinessLayer.Factories
     {
         public static AppUserDto ToDomain(this AppUser entity)
         {
-            AppUserDto dto = (AppUserDto)BaseFactory.ToDomain(entity);
+            if (entity == null)
+            {
+                return null;
+            }
+
+            AppUserDto dto = BaseFactory.ToDomain<AppUserDto>(entity);
             dto.Username = entity.Username;
             dto.Password = entity.Password;
             dto.Email = entity.Email;
@@ -22,7 +27,12 @@ namespace WorkoutApp.BusinessLayer.Factories
 
         public static AppUser ToEntity(this AppUserDto dto)
         {
-            AppUser entity = (AppUser)BaseFactory.ToEntity(dto);
+            if(dto == null)
+            {
+                return null;
+            }
+
+            AppUser entity = BaseFactory.ToEntity<AppUser>(dto);
             entity.Email = dto.Email;
             entity.Password = dto.Password;
             entity.Username = dto.Username;

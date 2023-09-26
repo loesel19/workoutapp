@@ -8,11 +8,11 @@ namespace WorkoutApp.Entity.Entities
 {
     public interface IEntity
     {
-        int Id { get; set; }
+        int? Id { get; set; }
         int UpdatedBy { get; set; }
         int AddedBy { get; set; }
-        DateTime DateAdded { get; set; }
-        DateTime DateUpdated { get; set; }
+        DateTime? DateAdded { get; set; }
+        DateTime? DateUpdated { get; set; }
         bool IsDeleted { get; set; }
     }
 }

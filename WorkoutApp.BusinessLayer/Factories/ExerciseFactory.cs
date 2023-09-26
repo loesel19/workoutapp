@@ -16,7 +16,8 @@ namespace WorkoutApp.BusinessLayer.Factories
             {
                 return null;
             }
-            ExerciseDto dto = (ExerciseDto)BaseFactory.ToDomain(entity);
+
+            ExerciseDto dto = BaseFactory.ToDomain<ExerciseDto>(entity);
             dto.CategoryId = entity.CategoryId;
             dto.Name = entity.Name;
 
@@ -29,7 +30,12 @@ namespace WorkoutApp.BusinessLayer.Factories
 
         public static Exercise ToEntity(this ExerciseDto dto)
         {
-            Exercise exercise = (Exercise)BaseFactory.ToEntity(dto);
+            if(dto == null)
+            {
+                return null;
+            }
+
+            Exercise exercise = BaseFactory.ToEntity<Exercise>(dto);
             exercise.CategoryId = dto.CategoryId;
             exercise.Name = dto.Name;
 
