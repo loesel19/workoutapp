@@ -12,6 +12,7 @@ namespace WorkoutApp.Entity
     {
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Set> Sets { get; set; }
 
         public DatabaseContext(DbContextOptions options) : base(options)
@@ -19,7 +20,7 @@ namespace WorkoutApp.Entity
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Category>().HasData(new Category
+           /* modelBuilder.Entity<Category>().HasData(new Category
             {
                 Name = "Chest", Id = 1, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
             });
@@ -43,6 +44,31 @@ namespace WorkoutApp.Entity
             {
                 Name = "Abs", Id = 6, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
             });
+
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "Bench Press", Id = 1, CategoryId = 1, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "Lateral Pull Down", Id = 2, CategoryId = 2, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "Dumbbell Curls", Id = 3, CategoryId = 3, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "Squat", Id = 4, CategoryId = 4, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "Overhead Press", Id = 5, CategoryId = 5, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });
+            modelBuilder.Entity<Exercise>().HasData(new Exercise 
+            { 
+                Name = "V-Ups", Id = 6, CategoryId = 6, AddedBy = -1, DateAdded = DateTime.Now, DateUpdated = DateTime.Now, IsDeleted = false, UpdatedBy = -1
+            });*/
         }
         public override int SaveChanges()
         {

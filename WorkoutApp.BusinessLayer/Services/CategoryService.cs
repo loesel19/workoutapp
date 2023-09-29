@@ -21,5 +21,24 @@ namespace WorkoutApp.BusinessLayer.Services
             }
             return new BaseResponse<List<CategoryDto>>().Success(categories.ConvertAll(x => x.ToDomain()), 200, $"Successfully retrieved {categories.Count} categories.");
         }
+
+        public BaseResponse<CategoryDto> CreateCategory(CategoryDto category)
+        {
+            var existing = _dbContext.Categories.FirstOrDefault(x => x.Name.ToLower() == category.Name.ToLower());
+            if(existing != null)
+            {
+                return new BaseResponse<CategoryDto>().Error(null, 200, $"A category with name {category.Name} already exists.");
+            }
+            category.AddedBy = GetId();
+            _dbContext.Categories.Add(category.ToEntity());
+            _dbContext.SaveChanges();
+            existing = _dbContext.Categories.FirstOrDefault(x => x.Name.ToLower() == category.Name.ToLower());
+            if(existing != null)
+            {
+                return new BaseResponse<CategoryDto>().Success(existing.ToDomain(), 200, $"Created category {category.Name}");
+            }
+            return new BaseResponse<CategoryDto>().Error(null, 200, $"Failed to add category with name {category.Name}");
+
+        }
     }
 }

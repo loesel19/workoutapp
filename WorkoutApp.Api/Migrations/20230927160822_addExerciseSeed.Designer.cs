@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkoutApp.Entity;
 
@@ -10,9 +11,11 @@ using WorkoutApp.Entity;
 namespace WorkoutApp.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230927160822_addExerciseSeed")]
+    partial class addExerciseSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
@@ -88,8 +91,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 1,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8011),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8039),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4071),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4097),
                             IsDeleted = false,
                             Name = "Chest",
                             UpdatedBy = -1
@@ -98,8 +101,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 2,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8097),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8099),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4116),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4118),
                             IsDeleted = false,
                             Name = "Back",
                             UpdatedBy = -1
@@ -108,8 +111,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 3,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8107),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8108),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4125),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4126),
                             IsDeleted = false,
                             Name = "Arms",
                             UpdatedBy = -1
@@ -118,8 +121,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 4,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8114),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8115),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4132),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4133),
                             IsDeleted = false,
                             Name = "Legs",
                             UpdatedBy = -1
@@ -128,8 +131,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 5,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8121),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8123),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4140),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4141),
                             IsDeleted = false,
                             Name = "Shoulders",
                             UpdatedBy = -1
@@ -138,8 +141,8 @@ namespace WorkoutApp.Api.Migrations
                         {
                             Id = 6,
                             AddedBy = -1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8131),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8132),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4153),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4154),
                             IsDeleted = false,
                             Name = "Abs",
                             UpdatedBy = -1
@@ -186,8 +189,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 1,
                             AddedBy = -1,
                             CategoryId = 1,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8141),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8143),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4164),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4166),
                             IsDeleted = false,
                             Name = "Bench Press",
                             UpdatedBy = -1
@@ -197,8 +200,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 2,
                             AddedBy = -1,
                             CategoryId = 2,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8151),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8152),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4175),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4176),
                             IsDeleted = false,
                             Name = "Lateral Pull Down",
                             UpdatedBy = -1
@@ -208,8 +211,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 3,
                             AddedBy = -1,
                             CategoryId = 3,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8159),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8161),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4183),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4184),
                             IsDeleted = false,
                             Name = "Dumbbell Curls",
                             UpdatedBy = -1
@@ -219,8 +222,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 4,
                             AddedBy = -1,
                             CategoryId = 4,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8217),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8219),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4191),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4192),
                             IsDeleted = false,
                             Name = "Squat",
                             UpdatedBy = -1
@@ -230,8 +233,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 5,
                             AddedBy = -1,
                             CategoryId = 5,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8226),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8228),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4198),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4200),
                             IsDeleted = false,
                             Name = "Overhead Press",
                             UpdatedBy = -1
@@ -241,8 +244,8 @@ namespace WorkoutApp.Api.Migrations
                             Id = 6,
                             AddedBy = -1,
                             CategoryId = 6,
-                            DateAdded = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8235),
-                            DateUpdated = new DateTime(2023, 9, 27, 18, 8, 42, 484, DateTimeKind.Local).AddTicks(8236),
+                            DateAdded = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4206),
+                            DateUpdated = new DateTime(2023, 9, 27, 12, 8, 22, 803, DateTimeKind.Local).AddTicks(4208),
                             IsDeleted = false,
                             Name = "V-Ups",
                             UpdatedBy = -1
@@ -273,7 +276,7 @@ namespace WorkoutApp.Api.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Repetitions")
+                    b.Property<int>("Repitions")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("UpdatedBy")

@@ -1,4 +1,5 @@
 // Composables
+import Toast from '@/modules/Toast'
 import state from '@/modules/state'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -29,14 +30,20 @@ const router = createRouter({
   routes,
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.name === 'login') {
-//     return;
-//   }
-//   if (!state.User?.Username) {
-//     //next({ name: 'login' })
-//   }
+router.beforeEach((to, from, next) => {
+  console.log("beforeEach")
+  if (to.name === 'login' || to.name === 'register') {
+    next()
+    return;
+  }
+  if (!state.User?.username) {
+    Toast.Warning("No user signed in.")
+    console.log("redirect")
+    next({ name: 'login'})
+  }else{
+    next()
+  }
 
-// })
+})
 
 export default router

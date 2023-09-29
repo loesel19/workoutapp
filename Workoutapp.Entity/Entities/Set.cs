@@ -10,7 +10,7 @@ namespace WorkoutApp.Entity.Entities
     public class Set : BaseEntity
     {
         public double Weight { get; set; }
-        public int Repitions { get; set; }
+        public int Repetitions { get; set; }
         public DateTime Date { get; set; }
         public int ExerciseId { get; set; }
         public int UserId { get; set; }

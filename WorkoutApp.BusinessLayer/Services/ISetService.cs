@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkoutApp.BusinessLayer.Dtos;
 using WorkoutApp.BusinessLayer.Responses;
-using WorkoutApp.Entity.Entities;
 
 namespace WorkoutApp.BusinessLayer.Services
 {
     public partial interface IService
     {
-        BaseResponse<List<CategoryDto>> GetAllCategories();
-        BaseResponse<CategoryDto> CreateCategory(CategoryDto category);
+        BaseResponse<List<SetDto>> GetSetsForUser(int userId);
+        BaseResponse<SetDto> CreateSet(SetDto set);
     }
 }

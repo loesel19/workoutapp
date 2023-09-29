@@ -15,7 +15,7 @@ namespace WorkoutApp.BusinessLayer.Factories
             SetDto dto = BaseFactory.ToDomain<SetDto>(entity);
             dto.ExerciseId = entity.ExerciseId;
             dto.Weight = entity.Weight;
-            dto.Repitions = entity.Repitions;
+            dto.Repetitions = entity.Repetitions;
             dto.Date = entity.Date;
             dto.UserId = entity.UserId;
 
@@ -38,7 +38,7 @@ namespace WorkoutApp.BusinessLayer.Factories
             Set entity = BaseFactory.ToEntity<Set>(dto);
             entity.ExerciseId = dto.ExerciseId;
             entity.Weight = dto.Weight;
-            entity.Repitions = dto.Repitions;
+            entity.Repetitions = dto.Repetitions;
             entity.Date = dto.Date;
             entity.UserId = dto.UserId;
 

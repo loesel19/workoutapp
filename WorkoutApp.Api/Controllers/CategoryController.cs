@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorkoutApp.BusinessLayer.Dtos;
 using WorkoutApp.BusinessLayer.Services;
 
 namespace WorkoutApp.Api.Controllers
@@ -15,6 +16,14 @@ namespace WorkoutApp.Api.Controllers
         {
             var categories = _service.GetAllCategories();
             return Json(categories);
+        }
+
+        [HttpPost]
+        [Route("[controller]")]
+        public IActionResult CreateCategory([FromBody]CategoryDto category) 
+        {
+            var newCategory = _service.CreateCategory(category);
+            return Json(newCategory);
         }
     }
 }

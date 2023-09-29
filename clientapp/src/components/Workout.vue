@@ -9,50 +9,76 @@
       <v-col-auto justify="end">
         <v-sheet class="pa-2 ma-2">
           <v-col cols="auto">
-            <v-dialog transition="dialog-top-transition" width="auto">
-              <template v-slot:activator="{ props }">
-                <v-btn v-bind="props"><span class="mdi mdi-plus">Add New Set</span></v-btn>
-              </template>
-              <template v-slot:default="{ isActive }">
-                <v-card min-width="400px" min-height="300px">
-                  <v-toolbar title="Add New Set"></v-toolbar>
-                  <v-card>
-                    <v-container>
-                      <v-row>
-                        <v-col>
-                          <v-select label="Category" :items="categories" item-title="name" item-value="id"></v-select>
-                        </v-col>
-                        <v-col>
-                          <div style="display: flex; justify-content:flex-start;">
-                            <v-text-field label="Exercise Name"></v-text-field>
-                            <v-btn height="55px">+</v-btn>
-                          </div>
+            <v-btn @click="setDialog = true;"><span class="mdi mdi-plus">Add New Set</span></v-btn>
+            <v-dialog transition="dialog-top-transition" v-model="setDialog" persistent width="auto">
+                
+              <template v-slot:default="setDialog">
+                <v-form ref="setForm">
+                  <v-card min-width="400px" min-height="300px">
+                    <v-toolbar title="Add New Set"></v-toolbar>
+                    <v-card>
+                      <v-container>
+                        <v-row>
+                          <v-col>
+                            <v-select label="Category" @update:model-value="categoryChange" :items="categories"
+                              item-title="name" item-value="id"></v-select>
 
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col>
-                          <v-text-field type="number" label="Weight(lbs)"></v-text-field>
-                        </v-col>
-                        <v-col>
-                          <v-text-field type="number" label="Repetitions"></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col>
-                          <v-date-picker title="" header="Enter Date" input-mode="keyboard" hide-actions="true"
-                            v-model="set.date"></v-date-picker>
-                        </v-col>
-                      </v-row>
-                    </v-container>
+                          </v-col>
+                          <v-col>
+                            <div style="display: flex; justify-content:flex-start;">
+                              <v-select label="Exercise Name" :items="exercises" item-title="name" item-value="id"
+                                v-model="set.exerciseId" required :rules="exerciseRules"></v-select>
+                              <v-btn style="height: 55px;" @click="exerciseDialog = true"><span
+                                  class="mdi mdi-plus"></span></v-btn>
+                            </div>
 
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col>
+                            <v-text-field type="number" label="Weight(lbs)" v-model="set.weight" required :rules="weightRules"></v-text-field>
+                          </v-col>
+                          <v-col>
+                            <v-text-field type="number" label="Repetitions" v-model="set.repetitions" required :rules="repRules"></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col>
+                            <v-date-picker title="" header="Enter Date" input-mode="keyboard" hide-actions="true"
+                              v-model="set.date" required :rules="dateRules"></v-date-picker>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+
+                    </v-card>
+                    <v-card-actions class="justify-end">
+                      <v-btn variant="text" @click="this.setDialog = false">Close</v-btn>
+                      <v-btn variant="text" @click="addSetClicked()" ref="addSetButton" :disabled="addSetDisabled">Add</v-btn>
+                    </v-card-actions>
                   </v-card>
-                  <v-card-actions class="justify-end">
-                    <v-btn variant="text" @click="isActive.value = false">Close</v-btn>
-                    <v-btn variant="text" @click="isActive.value = false">Add</v-btn>
-                  </v-card-actions>
-                </v-card>
+                </v-form>
               </template>
+            </v-dialog>
+            <v-dialog v-model="exerciseDialog" persistent width="auto">
+              <v-card min-width="400px" min-height="300px">
+                <v-toolbar title="Add New Exercise"></v-toolbar>
+                <v-container>
+                  <v-row>
+                    <v-col>
+                      <v-select label="Category" :items="categories" item-title="name" item-value="id" clearable
+                        v-model="newExercise.categoryId"></v-select>
+                    </v-col>
+                    <v-col>
+                      <v-text-field label="Exercise Name" clearable v-model="newExercise.name"></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                </v-container>
+                <v-card-actions class="justify-end">
+                  <v-btn variant="text" @click="exerciseDialog = false">Close</v-btn>
+                  <v-btn variant="text" @click="addExerciseClick" ref="addExerciseButton">Add</v-btn>
+                </v-card-actions>
+              </v-card>
             </v-dialog>
           </v-col>
         </v-sheet>
@@ -78,8 +104,11 @@
 //
 import HttpClient from '@/modules/HttpClient';
 import Toast from '@/modules/Toast';
+import state from '@/modules/state';
 import { VDataTable } from 'vuetify/labs/VDataTable';
 import { VDatePicker } from "vuetify/labs/VDatePicker"
+
+
 </script>
 
 <script>
@@ -92,12 +121,48 @@ export default {
       }
       this.categories = response.data
     });
+    this.getExercises()
+    this.getSets()
   },
   data() {
     return {
       categories: [],
-      set: { date: new Date() },
+      exercises: [],
+      sets: [],
+      exerciseDialog: false,
+      setDialog: false,
+      set: { date: new Date(), exerciseId: null, repetitions: 0, weight: 0, userId: -1 },
+      newExercise: { categoryId: null, name: "" },
       itemsPerPage: 5,
+      weightRules: [
+        value => {
+          if (value && value >= 0) return true
+
+          return 'Weight must be greater than or equal to 0.'
+        },
+      ],
+      repRules: [
+        value => {
+          if (value && value > 0) return true
+
+          return 'Repitions must be greater than 0.'
+        },
+      ],
+      exerciseRules: [
+        value => {
+          if (value && value > 0) return true
+
+          return 'Must select an exercise.'
+        },
+      ],
+      dateRules: [
+        value => {
+          if(value) return true
+
+          return 'Must enter a date.'
+        }
+      ],
+      addSetDisabled: false,
       headers: [
         {
           title: 'Exercise',
@@ -203,5 +268,92 @@ export default {
       ],
     }
   },
+  methods: {
+    categoryChange(args) {
+      this.getExercises(args)
+      this.set.exerciseId = null;
+    },
+    getExercises(categoryId) {
+      if (categoryId) {
+        HttpClient.Get("exercise/category/" + categoryId, (response) => {
+          if (!response.isSuccess) {
+            Toast.Error(response.message)
+            return;
+          }
+          this.exercises = response.data;
+          return;
+        })
+      }
+      HttpClient.Get("exercise", (response) => {
+        if (!response.isSuccess) {
+          Toast.Error(response.message)
+          return;
+        }
+        this.exercises = response.data
+        return;
+      })
+    },
+    addExerciseClick() {
+      if (!this.newExercise.categoryId || !this.newExercise.categoryId > 0) {
+        Toast.Warning("Must select a category for new exercise")
+        return false;
+      }
+      if (!this.newExercise.name.length > 0) {
+        Toast.Warning("Must provide name for new exercise")
+        return false;
+      }
+      console.log("new exer", this.newExercise)
+      HttpClient.Post("exercise", this.newExercise, (response) => {
+        if (!response.isSuccess) {
+          Toast.Error(response.message)
+          return
+        }
+        Toast.Success(response.message)
+        this.getExercises()
+        this.set.exerciseId = null
+        this.newExercise.categoryId = null
+        this.newExercise.name = null
+      });
+    },
+    async addSetClicked() {
+      this.addSetDisabled = true
+      var form = await this.$refs.setForm.validate()
+
+      if (!form.valid) {
+        Toast.Warning("Please ensure that all data is input correctly")
+        this.addSetDisabled = false;
+        return;
+      }
+      if(state.User?.id){
+        this.set.userId = state.User.id;
+        this.set.addedBy = state.User.id;
+      }
+      HttpClient.Post("Set", this.set, (response) => {
+          if(!response.isSuccess){
+            Toast.Error(response.message)
+            this.addSetDisabled = false
+            return;
+          }
+          console.log(response)
+          this.addSetDisabled = false
+          this.set = { date: new Date(), exerciseId: null, repetitions: 0, weight: 0, userId: -1 }
+          Toast.Success(response.message)
+          this.setDialog = false
+          return;
+      });
+
+
+    },
+    getSets(){
+      HttpClient.Get("set/user/" + state.User.id, (response) => {
+        if(!response.isSuccess){
+          Toast.Error(response.message)
+          return
+        }
+        this.sets = response.data
+        console.log("sets", response)
+      })
+    }
+  }
 }
 </script>

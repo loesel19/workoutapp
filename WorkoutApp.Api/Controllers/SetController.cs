@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorkoutApp.BusinessLayer.Dtos;
 using WorkoutApp.BusinessLayer.Services;
 
 namespace WorkoutApp.Api.Controllers
@@ -8,10 +9,19 @@ namespace WorkoutApp.Api.Controllers
         public SetController(IService service): base(service) { }
 
         [HttpGet]
-        [Route("[controller]/{userId}")]
-        public IActionResult GetSets()
+        [Route("[controller]/user/{userId}")]
+        public IActionResult GetSets(int userId)
         {
-            return new ContentResult { Content = "yurr" };
+            var response = _service.GetSetsForUser(userId);
+            return Json(response);
+        }
+
+        [HttpPost]
+        [Route("[controller]")]
+        public IActionResult CreateSet([FromBody]SetDto set)
+        {
+            var response = _service.CreateSet(set);
+            return Json(response);
         }
     }
 }
