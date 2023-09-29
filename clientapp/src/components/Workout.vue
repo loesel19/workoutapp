@@ -92,7 +92,7 @@
     <v-row>
       <v-responsive class="align-center text-center fill-height">
 
-        <v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="items" item-value="name"
+        <v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="sets" item-value="name"
           class="elevation-1"></v-data-table>
 
       </v-responsive>
@@ -168,10 +168,10 @@ export default {
           title: 'Exercise',
           align: 'start',
           sortable: true,
-          key: 'exercise',
+          key: 'exercise.name',
         },
         { title: 'Weight (lbs)', align: 'end', key: 'weight' },
-        { title: 'Repetitions', align: 'end', key: 'reps' },
+        { title: 'Repetitions', align: 'end', key: 'repetitions' },
         { title: 'Date', align: 'end', key: 'date' },
       ],
       items: [

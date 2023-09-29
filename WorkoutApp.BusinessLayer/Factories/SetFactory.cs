@@ -21,7 +21,7 @@ namespace WorkoutApp.BusinessLayer.Factories
 
             if(entity.Exercise != null)
             {
-                
+                dto.Exercise = entity.Exercise.ToDomain();
             }
 
             return dto;
