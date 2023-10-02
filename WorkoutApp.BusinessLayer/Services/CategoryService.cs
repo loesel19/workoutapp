@@ -29,7 +29,10 @@ namespace WorkoutApp.BusinessLayer.Services
             {
                 return new BaseResponse<CategoryDto>().Error(null, 200, $"A category with name {category.Name} already exists.");
             }
-            category.AddedBy = GetId();
+            if(category.AddedBy == null)
+            {
+                category.AddedBy = GetId();
+            }
             _dbContext.Categories.Add(category.ToEntity());
             _dbContext.SaveChanges();
             existing = _dbContext.Categories.FirstOrDefault(x => x.Name.ToLower() == category.Name.ToLower());

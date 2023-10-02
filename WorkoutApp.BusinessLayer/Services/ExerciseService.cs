@@ -19,7 +19,10 @@ namespace WorkoutApp.BusinessLayer.Services
             {
                 return new BaseResponse<ExerciseDto>().Error(null, 200, $"An exercise with name {exercise.Name} already exists.");
             }
-            exercise.AddedBy = GetId();
+            if(exercise.AddedBy == null)
+            {
+                exercise.AddedBy = GetId();
+            }
             _dbContext.Exercises.Add(exercise.ToEntity());
             _dbContext.SaveChanges();
             existing = _dbContext.Exercises.FirstOrDefault(x => x.Name.ToLower() == exercise.Name.ToLower());

@@ -14,7 +14,7 @@ namespace WorkoutApp.BusinessLayer.Services
     {
         public BaseResponse<List<SetDto>> GetSetsForUser(int userId)
         {
-            var sets = _dbContext.Sets.Include(x => x.Exercise).Where(x => x.UserId == userId && !x.IsDeleted).ToList(); 
+            var sets = _dbContext.Sets.Include(x => x.Exercise).ThenInclude(x => x.Category).Where(x => x.UserId == userId && !x.IsDeleted).ToList(); 
             if(sets == null)
             {
                 return new BaseResponse<List<SetDto>>().Error(null, 200, $"Failed to retrieve sets for user {userId}");

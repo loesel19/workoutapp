@@ -31,14 +31,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log("beforeEach")
   if (to.name === 'login' || to.name === 'register') {
     next()
     return;
   }
   if (!state.User?.username) {
     Toast.Warning("No user signed in.")
-    console.log("redirect")
     next({ name: 'login'})
   }else{
     next()
