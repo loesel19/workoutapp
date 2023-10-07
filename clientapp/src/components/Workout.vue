@@ -116,9 +116,10 @@ export default {
         return;
       }
       this.categories = response.data
+      this.getExercises();
+      this.getSets();
     });
-    this.getExercises()
-    this.getSets()
+    
   },
   data() {
     return {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,11 @@ namespace WorkoutApp.BusinessLayer.Services
     public partial class Service : IService
     {
         private readonly DatabaseContext _dbContext;
+        private readonly IDbContextTransaction _tranny;
 
         public Service(DatabaseContext context) { 
             _dbContext = context;
+            _tranny = context.Database.BeginTransaction();
         }
 
         public BaseResponse<AppUserDto>? getUser(int id)
@@ -50,6 +53,10 @@ namespace WorkoutApp.BusinessLayer.Services
         
         public BaseResponse<AppUserDto> createUser(AppUserDto user)
         {
+            using (var tranny = _dbContext.Database.BeginTransaction())
+            {
+
+            }
             var existingUser = _dbContext.AppUsers.FirstOrDefault(x => x.Username == StringHelper.GetHash(user.Username));
             if(existingUser != null)
             {
