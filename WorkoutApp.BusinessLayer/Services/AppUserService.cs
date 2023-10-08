@@ -16,11 +16,9 @@ namespace WorkoutApp.BusinessLayer.Services
     public partial class Service : IService
     {
         private readonly DatabaseContext _dbContext;
-        private readonly IDbContextTransaction _tranny;
 
         public Service(DatabaseContext context) { 
             _dbContext = context;
-            _tranny = context.Database.BeginTransaction();
         }
 
         public BaseResponse<AppUserDto>? getUser(int id)

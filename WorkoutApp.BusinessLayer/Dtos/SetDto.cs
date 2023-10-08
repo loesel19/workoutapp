@@ -12,5 +12,11 @@ namespace WorkoutApp.BusinessLayer.Dtos
         
         public AppUserDto? User { get; set; }
         public ExerciseDto? Exercise { get; set; }
+
+        public double OneRepMax { get
+            {
+                return Weight / (1.0278 - (0.0278 * Repetitions)); //1RM calculation using the Brzycki Equation
+            } 
+        }
     }
 }
