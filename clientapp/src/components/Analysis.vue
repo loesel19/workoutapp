@@ -70,7 +70,7 @@ export default {
         return;
       }
       let exerciseName = filterSets[0].exercise.name
-      let chartStatus = Chart.getChart("chartCanvas"); // <canvas> id
+      let chartStatus = Chart.getChart("chartCanvas");
       if (chartStatus != undefined) {
         chartStatus.destroy();
       }
@@ -79,14 +79,31 @@ export default {
         {
           type: 'line',
           data: {
-            labels: filterSets.map(row => row.date),
+            labels: filterSets.map(row => new Date(row.dateTyped).toString().split("GMT")[0]),
             datasets: [
               {
                 label: exerciseName,
                 data: filterSets.map(row => row.oneRepMax)
               }
             ]
-          }
+          },
+          // options: {
+          //   responsive: true,
+          //   plugins: {
+          //     tooltip: {
+          //       callbacks: {
+          //         footer: function (tooltipItems) {
+          //           let strFooter = ''
+          //           tooltipItems.forEach(function (tooltipItem) {
+          //             strFooter += tooltipItem.weight + ", " + tooltipItem.repetitions;
+          //           });
+          //           return strFooter; //return a string that you wish to append
+          //         }
+          //       }
+          //     }
+          //   },
+
+          // }
         }
       );
     },
@@ -97,6 +114,10 @@ export default {
           return
         }
         this.sets = response.data
+        this.sets.forEach(element => {
+          element.dateTyped = Date.parse(element.date)
+        });
+        console.log("sets", this.sets)
       })
     }
   },

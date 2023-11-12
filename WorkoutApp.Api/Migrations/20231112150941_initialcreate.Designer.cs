@@ -11,8 +11,8 @@ using WorkoutApp.Entity;
 namespace WorkoutApp.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230919160349_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231112150941_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,17 +22,17 @@ namespace WorkoutApp.Api.Migrations
 
             modelBuilder.Entity("WorkoutApp.Entity.Entities.AppUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AddedBy")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateUpdated")
+                    b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -59,17 +59,17 @@ namespace WorkoutApp.Api.Migrations
 
             modelBuilder.Entity("WorkoutApp.Entity.Entities.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AddedBy")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateUpdated")
+                    b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -87,9 +87,9 @@ namespace WorkoutApp.Api.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WorkoutApp.Entity.Entities.Set", b =>
+            modelBuilder.Entity("WorkoutApp.Entity.Entities.Exercise", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -99,13 +99,10 @@ namespace WorkoutApp.Api.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DateUpdated")
+                    b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
@@ -115,7 +112,41 @@ namespace WorkoutApp.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Repitions")
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("WorkoutApp.Entity.Entities.Set", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AddedBy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateAdded")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Repetitions")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("UpdatedBy")
@@ -129,7 +160,41 @@ namespace WorkoutApp.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Sets");
+                });
+
+            modelBuilder.Entity("WorkoutApp.Entity.Entities.Exercise", b =>
+                {
+                    b.HasOne("WorkoutApp.Entity.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WorkoutApp.Entity.Entities.Set", b =>
+                {
+                    b.HasOne("WorkoutApp.Entity.Entities.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkoutApp.Entity.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
