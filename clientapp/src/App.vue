@@ -11,7 +11,7 @@
       <v-list density="compact" nav>
         <v-list-item prepend-icon="mdi-home-outline" title="Home" value="home" v-on:click="goHome"></v-list-item>
         <v-list-item prepend-icon="mdi-dumbbell" title="Workout" value="workout" v-on:click="goWorkout"></v-list-item>
-        <v-list-item prepend-icon="mdi-poll" title="Analytics" value="analytics"></v-list-item>
+        <v-list-item prepend-icon="mdi-poll" title="Analytics" value="analytics" v-on:click="goAnalysis"></v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -44,6 +44,9 @@ export default {
     },
     goWorkout() {
       router.push('/workout')
+    },
+    goAnalysis(){
+      router.push('/analysis')
     }
   }
 }

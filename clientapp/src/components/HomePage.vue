@@ -29,7 +29,7 @@
           <v-tooltip text="View your progress with graphs">
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props" min-width="164" rel="noopener noreferrer" target="_blank" variant="text"
-                tooltip="tototo">
+                tooltip="tototo" v-on:click="goAnalysis">
                 <v-icon icon="mdi-account-group" size="large" start />
 
                 Analytics
@@ -53,6 +53,9 @@ export default {
   methods:{
     goWorkout(){
       router.push('/workout')
+    },
+    goAnalysis(){
+      router.push('/analysis')
     }
   }
 }
