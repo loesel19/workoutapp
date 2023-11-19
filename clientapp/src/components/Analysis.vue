@@ -14,9 +14,17 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-responsive class="align-center text-center fill-height">
-        <div style="width: 800px;"><canvas id="chartCanvas"></canvas></div>
-      </v-responsive>
+      <v-col>
+        <v-responsive class="align-center text-center fill-height">
+          <div style="width: 800px;"><canvas id="chartCanvas"></canvas></div>
+        </v-responsive>
+      </v-col>
+      <v-col>
+        <v-responsive class="align-center text-center fill-height">
+          <v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="currentSets" item-value="name"
+            class="elevation-1" id="setTable" hidden></v-data-table>
+        </v-responsive>
+      </v-col>
     </v-row>
 
   </v-container>
@@ -27,7 +35,8 @@
 import HttpClient from '@/modules/HttpClient';
 import Toast from '@/modules/Toast';
 import state from '@/modules/state';
-import Chart from 'chart.js/auto'
+import Chart from 'chart.js/auto';
+import { VDataTable } from 'vuetify/labs/VDataTable';
 
 
 </script>
@@ -35,15 +44,31 @@ import Chart from 'chart.js/auto'
 <script>
 export default {
   mounted() {
-    this.getExercises();
-    this.getSets()
+    HttpClient.Get('exercise', (response) => {
+      if (!response.isSuccess) {
+        Toast.Error(response.message)
+        return;
+      }
+      this.exercises = response.data
+      this.getSets();
+    })
+
   },
   data() {
     return {
       sets: [],
+      currentSets: [],
       categories: [],
       exercises: [],
-      currentChart: {}
+      currentChart: {},
+      itemsPerPage: 10,
+      headers: [
+        { title: 'Exercise', align: 'start', sortable: true, key: 'exercise.name' },
+        { title: 'Weight (lbs)', align: 'end', key: 'weight' },
+        { title: 'Repetitions', align: 'end', key: 'repetitions' },
+        { title: 'One Rep Max', align: 'center', key: 'oneRepMax' },
+        { title: 'Date', align: 'end', key: 'date' },
+      ],
     }
   },
   methods: {
@@ -59,12 +84,20 @@ export default {
     exerciseChange(exerciseId) {
       if (exerciseId) {
         this.drawGraph(exerciseId)
+        console.log(this.sets)
+        this.currentSets = [...this.sets.filter(x => x.exerciseId == exerciseId)]
+        console.log("curr sets", this.currentSets)
+        document.getElementById("setTable").hidden = false;
+      } else {
+        document.getElementById("setTable").hidden = true;
+        let chartStatus = Chart.getChart("chartCanvas");
+        if (chartStatus != undefined) {
+          chartStatus.destroy();
+        }
       }
     },
     drawGraph(exerciseId) {
       var filterSets = [...this.sets.filter(x => x.exerciseId == exerciseId)]
-      console.log("filtersets", filterSets)
-      console.log("sets", this.sets)
       if (!filterSets || filterSets.length < 2) {
         Toast.Warning("Not enough data to draw graph for exercise")
         return;
@@ -79,7 +112,7 @@ export default {
         {
           type: 'line',
           data: {
-            labels: filterSets.map(row => new Date(row.dateTyped).toString().split("GMT")[0]),
+            labels: filterSets.map(row => new Date(row.dateTyped).toString().split("GMT")[0].substring(4, 15)),
             datasets: [
               {
                 label: exerciseName,
@@ -87,23 +120,6 @@ export default {
               }
             ]
           },
-          // options: {
-          //   responsive: true,
-          //   plugins: {
-          //     tooltip: {
-          //       callbacks: {
-          //         footer: function (tooltipItems) {
-          //           let strFooter = ''
-          //           tooltipItems.forEach(function (tooltipItem) {
-          //             strFooter += tooltipItem.weight + ", " + tooltipItem.repetitions;
-          //           });
-          //           return strFooter; //return a string that you wish to append
-          //         }
-          //       }
-          //     }
-          //   },
-
-          // }
         }
       );
     },
@@ -120,7 +136,6 @@ export default {
         console.log("sets", this.sets)
       })
     }
-  },
-
+  }
 }
 </script>

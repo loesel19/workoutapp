@@ -116,8 +116,15 @@ export default {
         return;
       }
       this.categories = response.data
-      this.getExercises();
-      this.getSets();
+      HttpClient.Get("exercise", (response) => {
+        if (!response.isSuccess) {
+          Toast.Error(response.message)
+          return;
+        }
+        this.exercises = response.data
+        this.getSets();
+      })
+      
     });
     
   },
@@ -131,7 +138,7 @@ export default {
       setDialog: false,
       set: { date: new Date(), exerciseId: null, repetitions: 0, weight: 0, userId: -1 },
       newExercise: { categoryId: null, name: "" },
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       weightRules: [
         value => {
           if (value && value >= 0) return true
@@ -190,7 +197,6 @@ export default {
             return;
           }
           this.exercises = response.data;
-          console.log("sets for category", [...this.originalSets.filter(x => x.exercise.categoryId == categoryId)])
           this.sets = [...this.originalSets.filter(x => x.exercise.categoryId == categoryId)]
           return;
         })

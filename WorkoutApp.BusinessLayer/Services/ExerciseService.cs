@@ -19,7 +19,7 @@ namespace WorkoutApp.BusinessLayer.Services
             {
                 return new BaseResponse<ExerciseDto>().Error(null, 200, $"An exercise with name {exercise.Name} already exists.");
             }
-            if(exercise.AddedBy == null)
+            if (exercise.AddedBy == null)
             {
                 exercise.AddedBy = GetId();
             }
@@ -36,12 +36,20 @@ namespace WorkoutApp.BusinessLayer.Services
 
         public BaseResponse<List<ExerciseDto>> GetExercises()
         {
-            var exercises = _dbContext.Exercises.Include(x => x.Category).Where(x => !x.IsDeleted).ToList().ConvertAll(x => x.ToDomain());
-            if(exercises == null)
+            try
+            {
+                var exercises = _dbContext.Exercises.Include(x => x.Category).Where(x => !x.IsDeleted).ToList().ConvertAll(x => x.ToDomain());
+                if (exercises == null)
+                {
+                    return new BaseResponse<List<ExerciseDto>>().Error(null, 200, "Failed to retrieve exercises.");
+                }
+                return new BaseResponse<List<ExerciseDto>>().Success(exercises, 200, $"Successfully retrieved {exercises.Count()} exercises.");
+            }
+            catch (Exception ex)
             {
                 return new BaseResponse<List<ExerciseDto>>().Error(null, 200, "Failed to retrieve exercises.");
             }
-            return new BaseResponse<List<ExerciseDto>>().Success(exercises, 200, $"Successfully retrieved {exercises.Count()} exercises.");
+
         }
 
         public BaseResponse<List<ExerciseDto>> GetExercisesForCategory(int categoryId)
