@@ -5,15 +5,21 @@
         <h3 class="text-h2 ">Analysis of your workouts</h3>
       </v-col-auto>
     </v-row>
-
-    <v-row justify="center">
-
-      <v-col>
-        <v-select label="Exercise" style="max-width: 25%;" :items="exercises" item-value="id" item-title="name" clearable
-          @update:model-value="exerciseChange"></v-select>
-      </v-col>
-    </v-row>
     <v-row>
+      <v-col style="max-width: 25%; margin-top: 5%">
+        <v-row>
+          <v-select label="Exercise" :items="exercises" item-value="id" item-title="name" clearable
+            @update:model-value="exerciseChange"></v-select>
+        </v-row>
+        <v-row>
+          <v-date-picker title="" header="Start Date" input-mode="keyboard" hide-actions="false" v-model="startDate"
+            required :rules="dateRules"></v-date-picker>
+        </v-row>
+        <v-row>
+          <v-date-picker title="" header="End Date" input-mode="keyboard" hide-actions="false" v-model="endDate"
+            required :rules="dateRules"></v-date-picker>
+        </v-row>
+      </v-col>
       <v-col>
         <v-responsive class="align-center text-center fill-height">
           <div style="width: 800px;"><canvas id="chartCanvas"></canvas></div>
@@ -37,7 +43,7 @@ import Toast from '@/modules/Toast';
 import state from '@/modules/state';
 import Chart from 'chart.js/auto';
 import { VDataTable } from 'vuetify/labs/VDataTable';
-
+import { VDatePicker } from "vuetify/labs/VDatePicker"
 
 </script>
 
@@ -69,6 +75,8 @@ export default {
         { title: 'One Rep Max', align: 'center', key: 'oneRepMax' },
         { title: 'Date', align: 'end', key: 'date' },
       ],
+      startDate: "",
+      endDate: ""
     }
   },
   methods: {
@@ -133,6 +141,9 @@ export default {
         this.sets.forEach(element => {
           element.dateTyped = Date.parse(element.date)
         });
+        this.sets.forEach(element => {
+          element.date = element.date.replace("T", " ")
+        })
         console.log("sets", this.sets)
       })
     }
