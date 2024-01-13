@@ -60,8 +60,13 @@
               </v-row>
               <v-row>
                 <v-col>
+                  <v-checkbox label="Right Now" :model-value="bNow" @click="checkboxChanged"></v-checkbox>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
                   <v-date-picker title="" header="Enter Date" input-mode="keyboard" hide-actions="true" v-model="set.date"
-                    required :rules="dateRules"></v-date-picker>
+                    required :rules="dateRules" id="datePicker"></v-date-picker>
                 </v-col>
               </v-row>
             </v-container>
@@ -103,7 +108,7 @@ import Toast from '@/modules/Toast';
 import state from '@/modules/state';
 import { VDataTable } from 'vuetify/labs/VDataTable';
 import { VDatePicker } from "vuetify/labs/VDatePicker"
-
+import { VCheckbox } from 'vuetify/lib/components/index.mjs';
 
 </script>
 
@@ -133,6 +138,7 @@ export default {
       categories: [],
       exercises: [],
       sets: [],
+      bNow: true,
       originalSets: [],
       exerciseDialog: false,
       setDialog: false,
@@ -273,6 +279,9 @@ export default {
         this.originalSets = [...response.data]
         console.log("sets", response)
       })
+    },
+    checkboxChanged(){
+     
     }
   }
 }

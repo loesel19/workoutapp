@@ -6,7 +6,7 @@
       </v-col-auto>
     </v-row>
     <v-row>
-      <v-col style="max-width: 25%; margin-top: 5%">
+      <v-col style="max-width: 30%; margin-top: 5%">
         <v-row>
           <v-select label="Exercise" :items="exercises" item-value="id" item-title="name" clearable
             @update:model-value="exerciseChange"></v-select>
