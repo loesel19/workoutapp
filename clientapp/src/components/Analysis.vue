@@ -8,16 +8,20 @@
     <v-row>
       <v-col style="max-width: 30%; margin-top: 5%">
         <v-row>
-          <v-select label="Exercise" :items="exercises" item-value="id" item-title="name" clearable
+          <v-select label="Exercise" :items="exercises" item-value="id" v-model:model-value=exerciseId item-title="name" clearable
             @update:model-value="exerciseChange"></v-select>
         </v-row>
         <v-row>
-          <v-date-picker title="" header="Start Date" input-mode="keyboard" hide-actions="false" v-model="startDate"
-            required :rules="dateRules"></v-date-picker>
+          <div id="dtpStartDate" hidden>
+            <v-date-picker title="" header="Start Date" input-mode="keyboard" hide-actions="false" v-model="startDate"
+              required :rules="dateRules" @update:model-value="dateChanged"></v-date-picker>
+          </div>
         </v-row>
         <v-row>
-          <v-date-picker title="" header="End Date" input-mode="keyboard" hide-actions="false" v-model="endDate"
-            required :rules="dateRules"></v-date-picker>
+          <div id="dtpEndDate" hidden>
+            <v-date-picker title="" header="End Date" input-mode="keyboard" hide-actions="false" v-model="endDate"
+              required  @update:model-value="dateChanged"></v-date-picker>
+          </div>
         </v-row>
       </v-col>
       <v-col>
@@ -27,7 +31,7 @@
       </v-col>
       <v-col>
         <v-responsive class="align-center text-center fill-height">
-          <v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="currentSets" item-value="name"
+          <v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="displaySets" item-value="name"
             class="elevation-1" id="setTable" hidden></v-data-table>
         </v-responsive>
       </v-col>
@@ -63,7 +67,7 @@ export default {
   data() {
     return {
       sets: [],
-      currentSets: [],
+      displaySets: [],
       categories: [],
       exercises: [],
       currentChart: {},
@@ -76,7 +80,8 @@ export default {
         { title: 'Date', align: 'end', key: 'date' },
       ],
       startDate: "",
-      endDate: ""
+      endDate: "",
+      exerciseId: ""
     }
   },
   methods: {
@@ -90,14 +95,16 @@ export default {
       })
     },
     exerciseChange(exerciseId) {
+      console.log("exercise change")
       if (exerciseId) {
-        this.drawGraph(exerciseId)
-        console.log(this.sets)
-        this.currentSets = [...this.sets.filter(x => x.exerciseId == exerciseId)]
-        console.log("curr sets", this.currentSets)
         document.getElementById("setTable").hidden = false;
+        document.getElementById("dtpStartDate").hidden = false;
+        document.getElementById("dtpEndDate").hidden = false;
+        this.drawGraph(exerciseId)
       } else {
         document.getElementById("setTable").hidden = true;
+        document.getElementById("dtpStartDate").hidden = true;
+        document.getElementById("dtpEndDate").hidden = true;
         let chartStatus = Chart.getChart("chartCanvas");
         if (chartStatus != undefined) {
           chartStatus.destroy();
@@ -105,7 +112,13 @@ export default {
       }
     },
     drawGraph(exerciseId) {
-      var filterSets = [...this.sets.filter(x => x.exerciseId == exerciseId)]
+      console.log("original", this.sets)
+      var startDate = this.startDate && this.startDate != "" ? this.startDate : new Date(0);
+      var endDate = this.endDate && this.endDate != "" ? this.endDate : new Date();
+      console.log("start: " + startDate.toString() + ", end: " + endDate.toString())
+      var filterSets = this.sets.filter(x => x.exerciseId == exerciseId && x.dateTyped >= startDate && x.dateTyped <= endDate)
+      console.log("draw sets", filterSets)
+      this.displaySets = filterSets;
       if (!filterSets || filterSets.length < 2) {
         Toast.Warning("Not enough data to draw graph for exercise")
         return;
@@ -132,6 +145,7 @@ export default {
       );
     },
     getSets() {
+      console.log("get sets")
       HttpClient.Get("set/user/" + state.User.id, (response) => {
         if (!response.isSuccess) {
           Toast.Error(response.message)
@@ -144,8 +158,11 @@ export default {
         this.sets.forEach(element => {
           element.date = element.date.replace("T", " ")
         })
-        console.log("sets", this.sets)
       })
+    },
+    dateChanged() {
+      console.log("date Changed")
+      this.drawGraph(this.exerciseId);
     }
   }
 }
