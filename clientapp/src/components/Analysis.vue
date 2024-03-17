@@ -6,20 +6,21 @@
       </v-col-auto>
     </v-row>
     <v-row>
-      <v-col style="max-width: 30%; margin-top: 5%">
+      <v-col style="max-width: 25%; min-width: 25%; margin-top: 5%">
         <v-row>
           <v-select label="Exercise" :items="exercises" item-value="id" v-model:model-value=exerciseId item-title="name" clearable
             @update:model-value="exerciseChange"></v-select>
         </v-row>
         <v-row>
           <div id="dtpStartDate" hidden>
-            <v-date-picker title="" header="Start Date" input-mode="keyboard" hide-actions="false" v-model="startDate"
-              required :rules="dateRules" @update:model-value="dateChanged"></v-date-picker>
+            <v-date-picker max-width="83%" title="" header="Start Date" input-mode="keyboard" hide-actions="false" v-model="startDate"
+              required :rules="dateRules" @update:model-value="dateChanged">
+            </v-date-picker>
           </div>
         </v-row>
         <v-row>
           <div id="dtpEndDate" hidden>
-            <v-date-picker title="" header="End Date" input-mode="keyboard" hide-actions="false" v-model="endDate"
+            <v-date-picker max-width="83%" title="" header="End Date" input-mode="keyboard" hide-actions="false" v-model="endDate"
               required  @update:model-value="dateChanged"></v-date-picker>
           </div>
         </v-row>
@@ -154,6 +155,7 @@ export default {
         this.sets = response.data
         this.sets.forEach(element => {
           element.dateTyped = Date.parse(element.date)
+          element.oneRepMax = parseFloat(element.oneRepMax).toFixed(2);
         });
         this.sets.forEach(element => {
           element.date = element.date.replace("T", " ")
